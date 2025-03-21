@@ -415,9 +415,6 @@ a:hover::after {
     transition: all var(--transition-medium);
 }
 
-.logo:hover .custom-logo {
-    transform: scale(1.1);
-}
 
 .nav-links {
     display: flex;
