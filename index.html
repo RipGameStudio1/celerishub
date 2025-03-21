@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/Pgo8IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDIwMDEwOTA0Ly9FTiIKICJodHRwOi8vd3d3LnczLm9yZy9UUi8yMDAxL1JFQy1TVkctMjAwMTA5MDQvRFREL3N2ZzEwLmR0ZCI+CjxzdmcgdmVyc2lvbj0iMS4wIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiB3aWR0aD0iMzIwLjAwMDAwMHB0IiBoZWlnaHQ9IjM5OC4wMDAwMDBwdCIgdmlld0JveD0iMCAwIDMyMC4wMDAwMDAgMzk4LjAwMDAwMCIKIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIG1lZXQiPgo8bWV0YWRhdGE+CkNyZWF0ZWQgYnkgcG90cmFjZSAxLjE2LCB3cml0dGVuIGJ5IFBldGVyIFNlbGluZ2VyIDIwMDEtMjAxOQo8L21ldGFkYXRhPgo8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwLjAwMDAwMCwzOTguMDAwMDAwKSBzY2FsZSgwLjEwMDAwMCwtMC4xMDAwMDApIgpmaWxsPSIjMDAwMDAwIiBzdHJva2U9Im5vbmUiPgo8cGF0aCBkPSJNMTIwMCAzOTcwIGMtNjAzIC01OCAtMTA5NyAtNTI0IC0xMTg1IC0xMTIwIC05IC02MiAtMTQgLTE4MyAtMTUKLTM0NyBsMCAtMjUzIDE2MDAgMCAxNjAwIDAgMCAyOTggYzAgMzQwIC05IDQwMyAtODEgNTg1IC03MSAxODEgLTE1OSAzMTQKLTI5MiA0NDggLTE5MCAxOTAgLTQxMSAzMTAgLTY4MyAzNzAgLTkwIDE5IC0xMzMgMjIgLTQ3OSAyNCAtMjA5IDIgLTQxOCAwCi00NjUgLTV6IG05MjUgLTU4MSBjMTkwIC03MCAzMjUgLTE3OSA0MjcgLTM0NCAzMSAtNTAgNzggLTE2NyA4NSAtMjExIGw2IC0zNAotMTAzNiAwIGMtNTcwIDAgLTEwMzggMyAtMTA0MCA4IC05IDE0IDUxIDE3MiA5MSAyNDEgNzMgMTIxIDE5NCAyMzIgMzI3IDI5OAo0MiAyMSAxNTMgNTkgMTk1IDY2IDE0IDMgMjE2IDQgNDUwIDMgbDQyNSAtMiA3MCAtMjV6Ii8+CjxwYXRoIGQ9Ik0xNTg4IDE3MzIgbC0xNTg4IC0yIDAgLTI1MyBjMCAtMjgzIDEyIC0zOTIgNjAgLTU0NiAxMjkgLTQxOCA0ODMKLTc2MSA5MDIgLTg3NiAxNjcgLTQ1IDI4MSAtNTUgNjQ4IC01NSAzNTggMCA0ODQgMTAgNjI4IDUxIDQ3MSAxMzIgODMxIDUwOAo5MzcgOTc5IDI0IDEwMiAyNSAxMjcgMjUgNDAzIDAgMjI3IC0zIDI5NiAtMTIgMjk4IC03IDIgLTcyNyAzIC0xNjAwIDF6Cm0xMDUyIC01NzAgYzAgLTEwIC0xMSAtNTAgLTI0IC04OCAtODMgLTI0MyAtMjg5IC00MzEgLTU0MyAtNDk1IC03OCAtMTkgLTEwNgotMjAgLTQ5NSAtMTcgbC00MTMgNCAtODAgMjcgYy0xNDYgNTEgLTI2MiAxMjkgLTM1NSAyMzkgLTc1IDg5IC0xNjAgMjY0IC0xNjAKMzI4IDAgMjAgMTMgMjAgMTAzNSAyMCA5OTUgMCAxMDM1IC0xIDEwMzUgLTE4eiIvPgo8L2c+Cjwvc3ZnPgo=">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CelerisLabs</title>
+    
+    <!-- Подключаем шрифты -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    
+    <!-- Подключаем CSS и JS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Кастомный курсор для микроинтеракций -->
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+    
+    <!-- Фоновые элементы -->
+    <div class="bg-grid"></div>
+    <div class="bg-noise"></div>
+    
+    <!-- Canvas для анимированных блобов -->
+    <canvas id="blobCanvas"></canvas>
+    
+    <!-- Навигация -->
+    <nav class="navbar">
+        <div class="container navbar-container">
+            <a href="#" class="logo">
+                <div class="logo-mark">
+                    <img src="celerislabs_logo.svg" class="custom-logo" alt="CelerisLabs Logo">
+                </div>
+                <span>CelerisLabs</span>
+            </a>
+            <div class="nav-links">
+                <a href="#about-section" class="nav-link">О нас</a>
+                <a href="javascript:void(0);" class="nav-link">CEX сканер</a>
+                <a href="javascript:void(0);" class="nav-link">P2P сканер</a>
+                <a href="javascript:void(0);" class="nav-link">Войти</a>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Герой-секция -->
+    <section id="hero" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    <span class="text-reveal-container">
+                        <span class="text-reveal" data-delay="0.1">Инновационные</span>
+                    </span>
+                    <span class="text-reveal-container">
+                        <span class="text-reveal" data-delay="0.2">
+                            решения для <span class="gradient-text">криптовалютного мира</span>
+                        </span>
+                    </span>
+                </h1>
+                <p class="hero-subtitle">
+                    CelerisLabs — ваш портал к передовым технологиям и инновационным проектам. 
+                    Выберите направление, которое вас интересует, и откройте новый мир возможностей.
+                </p>
+                <div class="hero-actions">
+                    <button class="btn">
+                        <span class="btn-text">Начать исследование</span>
+                        <i class="material-icons-round">arrow_forward</i>
+                    </button>
+                    <a href="#" class="btn btn-outline">
+                        <span class="btn-text">Узнать больше</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Секция с карточками -->
+    <section id="cards-section" class="cards-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <span class="outlined-text">Наши</span> продукты<span class="gradient-text">.</span>
+                </h2>
+                <p class="section-description">
+                    Изучите инновации в квантовых вычислениях, искусственном интеллекте и биотехнологиях под руководством наших экспертов.
+                </p>
+            </div>
+            <div class="cards-grid" data-mobile="scroll">
+                <!-- Карточка 1 -->
+                <div class="card" data-cursor-text="Открыть">
+                    <div class="card-super">арбитраж</div>
+                    <div class="card-number">01</div>
+                    <h3 class="card-title">
+                        Межбиржевой <span class="gradient-text">Сканер</span>
+                    </h3>
+                    <p class="card-content">
+                        Сканер непрерывно анализирует колебания курсов криптовалют между биржами, превращая ценовые разрывы в прибыльные возможности и представляя их в интуитивно понятном, настраиваемом интерфейсе.
+                    </p>
+                    <div class="card-footer">
+                        <a href="#" class="card-link">
+                            Перейти 
+                            <i class="material-icons-round">arrow_forward</i>
+                        </a>
+                        <div class="card-stats">
+                            <div class="card-stat">
+                                <i class="material-icons-round">star</i>
+                                4.9
+                            </div>
+                            <div class="card-stat">
+                                <i class="material-icons-round">visibility</i>
+                                8.5K
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Карточка 2 -->
+                <div class="card" data-cursor-text="Открыть">
+                    <div class="card-super">арбитраж</div>
+                    <div class="card-number">02</div>
+                    <h3 class="card-title">
+                        P2P <span class="gradient-text">Сканер</span>
+                    </h3>
+                    <p class="card-content">
+                        Сканер круглосуточно анализирует p2p ордера от пользователей на разных биржах, превращая ценовые разрывы в прибыльные возможности и представляя их в интуитивно понятном интерфейсе.
+                    </p>
+                    <div class="card-footer">
+                        <a href="#" class="card-link">
+                            Перейти 
+                            <i class="material-icons-round">arrow_forward</i>
+                        </a>
+                        <div class="card-stats">
+                            <div class="card-stat">
+                                <i class="material-icons-round">star</i>
+                                4.8
+                            </div>
+                            <div class="card-stat">
+                                <i class="material-icons-round">visibility</i>
+                                12K
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Карточка 3 -->
+                <div class="card" data-cursor-text="Открыть">
+                    <div class="card-super">testnet</div>
+                    <div class="card-number">03</div>
+                    <h3 class="card-title">
+                        <span class="gradient-text">Discord </span>Спам-бот
+                    </h3>
+                    <p class="card-content">
+                        Изучите последние инновации в области биологических исследований и медицины. 
+                        Революция в здравоохранении начинается здесь.
+                    </p>
+                    <div class="card-footer">
+                        <a href="#" class="card-link">
+                            Перейти 
+                            <i class="material-icons-round">arrow_forward</i>
+                        </a>
+                        <div class="card-stats">
+                            <div class="card-stat">
+                                <i class="material-icons-round">star</i>
+                                4.7
+                            </div>
+                            <div class="card-stat">
+                                <i class="material-icons-round">visibility</i>
+                                9.3K
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Секция "О нас" -->
+    <section id="about-section" class="about-section">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-content">
+                    <h2 class="section-title">
+                        Почему <span class="gradient-text">выбирают</span> нас<span class="outlined-text">?</span>
+                    </h2>
+                    <p>
+                        CelerisLabs объединяет ведущих исследователей и инноваторов, создавая экосистему для развития прорывных технологий. 
+                        Наша цель — сделать будущее доступным уже сегодня.
+                    </p>
+                    <button class="btn">
+                        <span class="btn-text">Познакомиться с командой</span>
+                        <i class="material-icons-round">group</i>
+                    </button>
+                </div>
+                <div class="about-features" data-mobile="scroll">
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="material-icons-round">bolt</i>
+                        </div>
+                        <h3 class="feature-title">Скорость и эффективность</h3>
+                        <p class="feature-description">
+                            Мгновенный доступ к нужной информации, экономя ваше время.
+                        </p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="material-icons-round">security</i>
+                        </div>
+                        <h3 class="feature-title">Безопасность</h3>
+                        <p class="feature-description">
+                            Авторизация через телеграм, никаких логинов и паролей! Трудно украсть то, чего нет.
+                        </p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="material-icons-round">lightbulb</i>
+                        </div>
+                        <h3 class="feature-title">Инновации</h3>
+                        <p class="feature-description">
+                            Постоянные исследования и передовые технологии.
+                        </p>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-icon">
+                            <i class="material-icons-round">public</i>
+                        </div>
+                        <h3 class="feature-title">Глобальность</h3>
+                        <p class="feature-description">
+                            Объединяем исследователей со всего мира.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Подвал -->
+    <footer id="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <a href="#" class="footer-logo">
+                        <span>CelerisLabs</span>
+                    </a>
+                    <p class="footer-description">
+                        Портал к передовым технологиям и инновационным проектам. 
+                        Исследуйте будущее вместе с нами.
+                    </p>
+                    <div class="footer-social">
+                        <a href="#" class="social-link">
+                            <i class="material-icons-round">alternate_email</i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="material-icons-round">language</i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="material-icons-round">code</i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i class="material-icons-round">photo_camera</i>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h4>Компания</h4>
+                    <div class="footer-links">
+                        <a href="#" class="footer-link">О нас</a>
+                        <a href="#" class="footer-link">Команда</a>
+                        <a href="#" class="footer-link">Карьера</a>
+                        <a href="#" class="footer-link">Партнеры</a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h4>Исследования</h4>
+                    <div class="footer-links">
+                        <a href="#" class="footer-link">Квантовые вычисления</a>
+                        <a href="#" class="footer-link">Искусственный интеллект</a>
+                        <a href="#" class="footer-link">Биотехнологии</a>
+                        <a href="#" class="footer-link">Научные публикации</a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h4>Ресурсы</h4>
+                    <div class="footer-links">
+                        <a href="#" class="footer-link">Блог</a>
+                        <a href="#" class="footer-link">Документация</a>
+                        <a href="#" class="footer-link">API</a>
+                        <a href="#" class="footer-link">Поддержка</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 CelerisLabs. Все права защищены.</p>
+                <p>Сделано с использованием современных технологий (рабский труд индусов)</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Мобильное меню -->
+    <div class="mobile-menu-overlay"></div>
+    <div class="mobile-menu">
+        <div class="mobile-menu-header">
+            <a href="#" class="logo">
+                <div class="logo-mark">
+                    <img src="celerislabs_logo.svg" class="custom-logo" alt="CelerisLabs Logo">
+                </div>
+                <span>CelerisLabs</span>
+            </a>
+            <button class="mobile-menu-close">
+                <i class="material-icons-round">close</i>
+            </button>
+        </div>
+        <div class="mobile-menu-content">
+            <a href="#" class="mobile-nav-link">О нас</a>
+            <a href="#" class="mobile-nav-link">CEX сканер</a>
+            <a href="#about-section" class="mobile-nav-link">P2P сканер</a>
+            <a href="#" class="mobile-nav-link">Войти</a>
+        </div>
+    </div>
+
+    <!-- Кнопка-гамбургер для мобильного меню -->
+    <button class="mobile-menu-toggle">
+        <i class="material-icons-round">menu</i>
+    </button>
+    
+    <!-- Подключаем JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollToPlugin.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
