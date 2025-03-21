@@ -69,7 +69,7 @@ function initCustomCursor() {
             
             gsap.to(cursorFollower, {
                 scale: 1.5,
-                borderColor: 'var(--accent-secondary)',
+                borderColor: 'var(--text-color)',
                 duration: 0.3
             });
             
@@ -99,7 +99,7 @@ function initCustomCursor() {
             
             gsap.to(cursorFollower, {
                 scale: 1,
-                borderColor: 'var(--accent-secondary)',
+                borderColor: 'var(--text-color)',
                 duration: 0.3
             });
             
