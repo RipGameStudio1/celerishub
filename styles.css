@@ -5,9 +5,9 @@
     --text-secondary: rgba(255, 255, 255, 0.7);
     --text-tertiary: rgba(255, 255, 255, 0.5);
     
-    --accent-primary: #FF0000;
-    --accent-secondary: #ff2400;
-    --accent-tertiary: #B45309;
+    --accent-primary: #ff6800;
+    --accent-secondary: #ff8800;
+    --accent-tertiary: #c04000;
     
     --font-heading: 'Space Grotesk', sans-serif;
     --font-body: 'Inter', sans-serif;
@@ -253,6 +253,7 @@ a:hover::after {
 
 .outlined-text:hover {
     color: var(--accent-secondary);
+    -webkit-text-stroke: 1px var(--accent-secondary);
 }
 
 .gradient-text {
@@ -292,9 +293,8 @@ a:hover::after {
 }
 
 .hero-title:hover {
-    letter-spacing: 0.02em;
-    color: var(--accent-secondary);
-    text-shadow: 0 0 15px rgba(110, 86, 207, 0.3);
+    letter-spacing: 0.08em;
+    transform: perspective(500px) rotateX(5deg);
 }
 
 /* Кнопки - исправленный стиль */
@@ -414,7 +414,6 @@ a:hover::after {
     filter: brightness(0) invert(1);
     transition: all var(--transition-medium);
 }
-
 
 .nav-links {
     display: flex;
