@@ -52,7 +52,7 @@ function initCustomCursor() {
         gsap.to(cursorFollower, {
             x: e.clientX,
             y: e.clientY,
-            duration: 0.5
+            duration: 0.2
         });
     });
     
@@ -64,13 +64,13 @@ function initCustomCursor() {
             gsap.to(cursor, {
                 scale: 2,
                 opacity: 0.5,
-                duration: 0.3
+                duration: 0
             });
             
             gsap.to(cursorFollower, {
                 scale: 1.5,
                 borderColor: 'var(--text-color)',
-                duration: 0.3
+                duration: 0.2
             });
             
             if (link.getAttribute('data-cursor-text')) {
@@ -100,7 +100,7 @@ function initCustomCursor() {
             gsap.to(cursorFollower, {
                 scale: 1,
                 borderColor: 'var(--text-color)',
-                duration: 0.3
+                duration: 0.2
             });
             
             cursor.innerHTML = '';
