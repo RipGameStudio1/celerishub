@@ -1,1 +1,309 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CEX-CEX Scan</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css?v=1">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Верхняя панель с информацией и управлением -->
+        <header class="app-header">
+            <div class="logo">
+                <span>CEX-CEX</span>
+                <span class="highlight">Scan</span>
+            </div>
+            
+            <div class="view-controls">
+                <button class="view-btn active" data-view="treemap">
+                    <span class="material-icons-round">dashboard</span>
+                    <span>Treemap</span>
+                </button>
+                <button class="view-btn" data-view="grid">
+                    <span class="material-icons-round">grid_view</span>
+                    <span>Grid</span>
+                </button>
+                <button class="view-btn" data-view="list">
+                    <span class="material-icons-round">view_list</span>
+                    <span>List</span>
+                </button>
+            </div>
+            
+            <div class="user-info">
+                <div class="status-badge">
+                    <span class="license-status">Premium</span>
+                </div>
+                <span class="username">@username</span>
+            </div>
+        </header>
+        
+        <!-- Основной контент -->
+        <main class="main-content">
+            <!-- Левая панель с фильтрами -->
+            <aside class="filter-panel">
+                <div class="panel-header">
+                    <h2>Фильтры</h2>
+                    <button class="refresh-btn" id="refreshData">
+                        <span class="material-icons-round">refresh</span>
+                    </button>
+                </div>
+                
+                <div class="filter-group">
+                    <h3>Сортировка</h3>
+                    <div class="sort-options">
+                        <button class="sort-btn" data-sort="coin" data-order="asc">
+                            <span class="material-icons-round">sort_by_alpha</span>
+                            <span>По монете ↑</span>
+                        </button>
+                        <button class="sort-btn" data-sort="coin" data-order="desc">
+                            <span class="material-icons-round">sort_by_alpha</span>
+                            <span>По монете ↓</span>
+                        </button>
+                        <button class="sort-btn" data-sort="network" data-order="asc">
+                            <span class="material-icons-round">lan</span>
+                            <span>По сети ↑</span>
+                        </button>
+                        <button class="sort-btn" data-sort="network" data-order="desc">
+                            <span class="material-icons-round">lan</span>
+                            <span>По сети ↓</span>
+                        </button>
+                        <button class="sort-btn active" data-sort="spread" data-order="desc">
+                            <span class="material-icons-round">trending_up</span>
+                            <span>По спреду ↓</span>
+                        </button>
+                        <button class="sort-btn" data-sort="spread" data-order="asc">
+                            <span class="material-icons-round">trending_down</span>
+                            <span>По спреду ↑</span>
+                        </button>
+                        <button class="sort-btn" data-sort="profit" data-order="desc">
+                            <span class="material-icons-round">payments</span>
+                            <span>По прибыли ↓</span>
+                        </button>
+                        <button class="sort-btn" data-sort="profit" data-order="asc">
+                            <span class="material-icons-round">payments</span>
+                            <span>По прибыли ↑</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="filter-group">
+                    <h3>Диапазоны</h3>
+                    <div class="range-filter">
+                        <div class="range-label">
+                            <span>Спред (%)</span>
+                            <div class="range-values">
+                                <span id="spreadMinVal">0%</span> - <span id="spreadMaxVal">10%</span>
+                            </div>
+                        </div>
+                        <div class="double-range">
+                            <input type="range" class="range-min" id="spreadMin" min="0" max="10" step="0.1" value="0">
+                            <input type="range" class="range-max" id="spreadMax" min="0" max="10" step="0.1" value="10">
+                            <div class="range-track"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="range-filter">
+                        <div class="range-label">
+                            <span>Объем ($)</span>
+                            <div class="range-values">
+                                <span id="volumeMinVal">0</span> - <span id="volumeMaxVal">100,000</span>
+                            </div>
+                        </div>
+                        <div class="double-range">
+                            <input type="range" class="range-min" id="volumeMin" min="0" max="100000" step="500" value="0">
+                            <input type="range" class="range-max" id="volumeMax" min="0" max="100000" step="500" value="100000">
+                            <div class="range-track"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="range-filter">
+                        <div class="range-label">
+                            <span>Время (мин)</span>
+                            <div class="range-values">
+                                <span id="timeMinVal">0</span> - <span id="timeMaxVal">60</span>
+                            </div>
+                        </div>
+                        <div class="double-range">
+                            <input type="range" class="range-min" id="timeMin" min="0" max="60" step="1" value="0">
+                            <input type="range" class="range-max" id="timeMax" min="0" max="60" step="1" value="60">
+                            <div class="range-track"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="filter-group">
+                    <h3>Монеты</h3>
+                    <div class="search-box">
+                        <input type="text" id="coinSearch" placeholder="Поиск монет...">
+                        <span class="material-icons-round">search</span>
+                    </div>
+                    <div class="coin-filters">
+                        <!-- Эти элементы будут добавлены динамически через JavaScript -->
+                        <div class="coin-tag active" data-coin="BTC">BTC</div>
+                        <div class="coin-tag active" data-coin="ETH">ETH</div>
+                        <div class="coin-tag" data-coin="SOL">SOL</div>
+                        <div class="coin-tag" data-coin="XRP">XRP</div>
+                        <div class="coin-tag active" data-coin="DOGE">DOGE</div>
+                        <!-- И так далее... -->
+                    </div>
+                </div>
+                
+                <!-- Фильтр бирж покупки -->
+                <div class="filter-group">
+                    <h3>Биржи покупки</h3>
+                    <div class="exchange-filters buy-exchanges">
+                        <!-- Теги бирж будут добавлены динамически через JavaScript -->
+                    </div>
+                </div>
+                
+                <!-- Фильтр бирж продажи -->
+                <div class="filter-group">
+                    <h3>Биржи продажи</h3>
+                    <div class="exchange-filters sell-exchanges">
+                        <!-- Теги бирж будут добавлены динамически через JavaScript -->
+                    </div>
+                </div>
+                
+                <div class="filter-group">
+                    <h3>Обновление</h3>
+                    <div class="interval-options">
+                        <button class="interval-btn" data-interval="0">Вручную</button>
+                        <button class="interval-btn" data-interval="5">5 сек</button>
+                        <button class="interval-btn active" data-interval="10">10 сек</button>
+                        <button class="interval-btn" data-interval="30">30 сек</button>
+                        <button class="interval-btn" data-interval="60">1 мин</button>
+                    </div>
+                </div>
+            </aside>
+            
+            <!-- Основная область тепловой карты -->
+            <section class="heatmap-container">
+                <div class="heatmap-header">
+                    <div class="stats">
+                        <div class="stat-item">
+                            <span class="stat-label">Пары</span>
+                            <span class="stat-value" id="pairsCount">235</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Макс. спред</span>
+                            <span class="stat-value" id="maxSpread">3.8%</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">Общий объем</span>
+                            <span class="stat-value" id="totalVolume">$1.2M</span>
+                        </div>
+                    </div>
+                    
+                    <div class="color-legend">
+                        <span>Спред:</span>
+                        <div class="legend-scale">
+                            <div class="legend-point" style="background-color: #084c8c;">0%</div>
+                            <div class="legend-point" style="background-color: #0d72bf;"></div>
+                            <div class="legend-point" style="background-color: #10a0e1;"></div>
+                            <div class="legend-point" style="background-color: #f3b03c;"></div>
+                            <div class="legend-point" style="background-color: #f07232;"></div>
+                            <div class="legend-point" style="background-color: #e53935;">5%+</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="heatmap-view active" id="treemapView">
+                    <!-- Здесь будет генерироваться тепловая карта в виде treemap -->
+                </div>
+                
+                <div class="heatmap-view" id="gridView">
+                    <!-- Здесь будет генерироваться тепловая карта в виде сетки -->
+                </div>
+                
+                <div class="heatmap-view" id="listView">
+                    <!-- Здесь будет генерироваться тепловая карта в виде списка -->
+                </div>
+            </section>
+            
+            <!-- Панель с деталями выбранной пары -->
+            <aside class="details-panel" id="pairDetailsPanel">
+                <div class="panel-header">
+                    <h2>Детали пары</h2>
+                    <button class="close-btn" id="closeDetailsPanel">
+                        <span class="material-icons-round">close</span>
+                    </button>
+                </div>
+                
+                <div class="pair-summary">
+                    <div class="pair-title">
+                        <h3 id="detailsPairName">BTC/USDT</h3>
+                        <span class="pair-network" id="detailsNetwork">Ethereum</span>
+                    </div>
+                    
+                    <div class="spread-badge hot" id="detailsSpread">+3.2%</div>
+                </div>
+                
+                <div class="exchange-route">
+                    <div class="exchange buy">
+                        <div class="exchange-name" id="detailsBuyExchange">Binance</div>
+                        <div class="exchange-price" id="detailsBuyPrice">$39,745.23</div>
+                    </div>
+                    
+                    <div class="route-arrow">
+                        <span class="material-icons-round">arrow_forward</span>
+                    </div>
+                    
+                    <div class="exchange sell">
+                        <div class="exchange-name" id="detailsSellExchange">KuCoin</div>
+                        <div class="exchange-price" id="detailsSellPrice">$41,015.28</div>
+                    </div>
+                </div>
+                
+                <div class="details-metrics">
+                    <div class="metric">
+                        <span class="metric-label">Объем</span>
+                        <span class="metric-value" id="detailsVolume">$24,324.56</span>
+                    </div>
+                    
+                    <div class="metric">
+                        <span class="metric-label">Комиссия</span>
+                        <span class="metric-value" id="detailsCommission">0.0013 BTC</span>
+                    </div>
+                    
+                    <div class="metric">
+                        <span class="metric-label">Прибыль</span>
+                        <span class="metric-value highlight" id="detailsProfit">$778.39</span>
+                    </div>
+                    
+                    <div class="metric">
+                        <span class="metric-label">Обновлено</span>
+                        <span class="metric-value" id="detailsUpdated">12с назад</span>
+                    </div>
+                </div>
+                
+                <div class="action-buttons">
+                    <button class="action-btn buy-btn" id="detailsBuyBtn">
+                        <span class="material-icons-round">call_made</span>
+                        <span>Купить на Binance</span>
+                    </button>
+                    
+                    <button class="action-btn sell-btn" id="detailsSellBtn">
+                        <span class="material-icons-round">call_received</span>
+                        <span>Продать на KuCoin</span>
+                    </button>
+                </div>
+                
+                <div class="pin-controls">
+                    <button class="pin-btn" id="detailsPinBtn">
+                        <span class="material-icons-round">push_pin</span>
+                        <span>Закрепить</span>
+                    </button>
+                </div>
+            </aside>
+        </main>
+    </div>
+    
+    <script src="script.js?v23"></script>
+</body>
+</html>

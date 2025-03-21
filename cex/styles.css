@@ -1,0 +1,1390 @@
+:root {
+    /* Основные цвета */
+    --bg-primary: #131722;
+    --bg-secondary: #1c2030;
+    --bg-tertiary: #262b3e;
+    --text-primary: #edf0f5;
+    --text-secondary: #a8a8bf;
+    --accent-blue: #2962ff;
+    --accent-green: #26a69a;
+    --accent-red: #ef5350;
+    
+    /* Градации тепловой карты */
+    --heat-cold-1: #084c8c;
+    --heat-cold-2: #0d72bf;
+    --heat-warm-1: #10a0e1;
+    --heat-warm-2: #f3b03c;
+    --heat-hot-1: #f07232;
+    --heat-hot-2: #e53935;
+    
+    /* Размеры и тени */
+    --border-radius: 8px;
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.15);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.2);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.25);
+    
+    /* Переходы */
+    --transition-fast: 0.15s ease;
+    --transition-normal: 0.25s ease;
+    --transition-slow: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+html, body {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    font-size: 14px;
+    line-height: 1.5;
+    height: 100vh;
+    overflow: hidden;
+    overflow-x: hidden;
+}
+
+/* Основные контейнеры */
+.app-container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-content {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+    transition: padding-right 0.3s ease;
+}
+
+.main-content.details-open {
+    padding-right: 320px;
+}
+
+/* Верхняя панель */
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+    background-color: var(--bg-secondary);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    flex-wrap: nowrap;
+}
+
+.logo {
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: 0.5px;
+}
+
+.logo .highlight {
+    color: var(--accent-blue);
+    margin-left: 4px;
+}
+
+.view-controls {
+    display: flex;
+    gap: 10px;
+}
+
+.view-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 12px;
+    background-color: var(--bg-tertiary);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: var(--border-radius);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.view-btn:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.view-btn.active {
+    background-color: var(--accent-blue);
+    color: white;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.status-badge {
+    padding: 4px 10px;
+    background-color: rgba(38, 166, 154, 0.1);
+    border-radius: 20px;
+}
+
+.license-status {
+    color: var(--accent-green);
+    font-weight: 500;
+    font-size: 12px;
+}
+
+.username {
+    color: var(--text-secondary);
+    font-size: 13px;
+}
+
+/* Левая панель фильтрации */
+.filter-panel {
+    width: 280px;
+    background-color: var(--bg-secondary);
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 20px;
+    overflow-y: auto;
+    transition: all 0.3s ease;
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.panel-header h2 {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.refresh-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background-color: var(--bg-tertiary);
+    border: none;
+    border-radius: 50%;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.refresh-btn:hover {
+    background-color: var(--accent-blue);
+}
+
+.filter-group {
+    margin-bottom: 24px;
+    transition: max-height 0.3s ease;
+    overflow: hidden;
+}
+
+.filter-group h3 {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 12px;
+    color: var(--text-secondary);
+}
+
+.filter-heading {
+    cursor: pointer;
+    padding: 8px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.filter-heading:hover {
+    color: var(--accent-blue);
+}
+
+.filter-group-content {
+    transition: opacity 0.3s ease;
+}
+
+.filter-group.collapsed .filter-group-content {
+    display: none;
+}
+
+.collapse-btn {
+    font-size: 20px;
+    transition: transform 0.2s ease;
+}
+
+.filter-group.collapsed .collapse-btn {
+    transform: rotate(180deg);
+}
+
+/* Стили для кнопок сортировки */
+.sort-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.sort-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 8px;
+    background-color: var(--bg-tertiary);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: var(--border-radius);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.sort-btn span:last-child {
+    font-size: 12px;
+}
+
+.sort-btn.active {
+    background-color: rgba(41, 98, 255, 0.15);
+    border-color: var(--accent-blue);
+    color: var(--text-primary);
+}
+
+.sort-btn .material-icons-round {
+    font-size: 20px;
+}
+
+.sort-btn:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.sort-btn.active:hover {
+    background-color: rgba(41, 98, 255, 0.2);
+}
+
+/* Ползунки диапазонов */
+.range-filter {
+    margin-bottom: 16px;
+}
+
+.range-label {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.range-values {
+    color: var(--accent-blue);
+    font-weight: 500;
+}
+
+.double-range {
+    position: relative;
+    height: 5px;
+    margin: 15px 10px;
+}
+
+.range-track {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background-color: var(--bg-tertiary);
+    border-radius: 5px;
+    z-index: 1;
+}
+
+.double-range input {
+    position: absolute;
+    width: 100%;
+    height: 5px;
+    background: none;
+    pointer-events: none;
+    -webkit-appearance: none;
+    z-index: 2;
+}
+
+.double-range input::-webkit-slider-thumb {
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background-color: var(--accent-blue);
+    cursor: pointer;
+    pointer-events: auto;
+    -webkit-appearance: none;
+    z-index: 3;
+}
+
+/* Теги монет */
+.search-box {
+    position: relative;
+    margin-bottom: 12px;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 8px 12px 8px 36px;
+    background-color: var(--bg-tertiary);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: var(--border-radius);
+    color: var(--text-primary);
+}
+
+.search-box .material-icons-round {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
+    font-size: 18px;
+}
+
+.coin-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.coin-tag {
+    padding: 6px 12px;
+    background-color: var(--bg-tertiary);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.coin-tag.active {
+    background-color: rgba(41, 98, 255, 0.15);
+    border-color: var(--accent-blue);
+    color: var(--accent-blue);
+}
+
+/* Кнопки интервала обновления */
+.interval-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.interval-btn {
+    flex: 1;
+    min-width: 60px;
+    padding: 8px;
+    background-color: var(--bg-tertiary);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: var(--border-radius);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.interval-btn.active {
+    background-color: rgba(41, 98, 255, 0.15);
+    border-color: var(--accent-blue);
+    color: var(--accent-blue);
+}
+
+/* Основной контейнер тепловой карты */
+.heatmap-container {
+    flex: 1;
+    padding: 20px;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.heatmap-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.stats {
+    display: flex;
+    gap: 24px;
+    flex-wrap: nowrap;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-label {
+    color: var(--text-secondary);
+    font-size: 12px;
+}
+
+.stat-value {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.color-legend {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--text-secondary);
+}
+
+.legend-scale {
+    display: flex;
+    align-items: center;
+    height: 20px;
+}
+
+.legend-point {
+    width: 40px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    color: white;
+}
+
+.legend-point:first-child {
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+
+.legend-point:last-child {
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+/* Виды тепловой карты */
+.heatmap-view {
+    display: none;
+    flex: 1;
+}
+
+.heatmap-view.active {
+    display: flex;
+}
+
+/* Принудительное скрытие неактивных видов */
+.heatmap-view:not(.active) {
+    display: none !important;
+}
+
+/* Treemap View */
+#treemapView {
+    display: none;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+#treemapView.active {
+    display: flex;
+}
+
+/* Белый текст на всех элементах в режиме Treemap */
+#treemapView .heatmap-tile * {
+    color: white !important;
+}
+
+#treemapView .heatmap-tile .exchange-link:hover {
+    color: #e0e0e0 !important;
+    text-decoration: underline;
+}
+
+#treemapView .tile-content {
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+#treemapView .tile-header, 
+#treemapView .tile-body, 
+#treemapView .tile-footer {
+    color: white !important;
+}
+
+/* Стили элементов тепловой карты (treemap) */
+.heatmap-tile {
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: var(--transition-normal);
+    animation: fadeIn 0.3s ease;
+}
+
+.heatmap-tile.cold {
+    background-color: var(--heat-cold-1);
+}
+
+.heatmap-tile.cool {
+    background-color: var(--heat-cold-2);
+}
+
+.heatmap-tile.warm {
+    background-color: var(--heat-warm-1);
+}
+
+.heatmap-tile.warmer {
+    background-color: var(--heat-warm-2);
+}
+
+.heatmap-tile.hot {
+    background-color: var(--heat-hot-1);
+}
+
+.heatmap-tile.very-hot {
+    background-color: var(--heat-hot-2);
+}
+
+.heatmap-tile:hover {
+    transform: scale(1.02);
+    box-shadow: var(--shadow-md);
+}
+
+.tile-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    padding: 10px;
+    color: white;
+}
+
+.tile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.tile-pair {
+    font-weight: 600;
+}
+
+.tile-spread {
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.tile-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: auto;
+}
+
+.tile-exchanges {
+    display: flex;
+    gap: 6px;
+    opacity: 0.8;
+}
+
+.tile-volume {
+    opacity: 0.8;
+}
+
+/* Анимация пульсации для обновленных элементов */
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(255, 255, 255, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 255, 255, 0); }
+}
+
+.tile-updating {
+    animation: pulse 1.5s;
+}
+
+/* Анимация появления */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Grid View */
+#gridView {
+    display: none;
+    flex-direction: column;
+}
+
+#gridView.active {
+    display: flex;
+}
+
+.grid-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+}
+
+.grid-card {
+    background-color: var(--bg-tertiary);
+    border-radius: var(--border-radius);
+    border-left: 5px solid transparent;
+    overflow: hidden;
+    cursor: pointer;
+    transition: var(--transition-normal);
+    animation: fadeIn 0.3s ease;
+}
+
+.grid-card.cold {
+    border-left-color: var(--heat-cold-1);
+}
+
+.grid-card.cool {
+    border-left-color: var(--heat-cold-2);
+}
+
+.grid-card.warm {
+    border-left-color: var(--heat-warm-1);
+}
+
+.grid-card.warmer {
+    border-left-color: var(--heat-warm-2);
+}
+
+.grid-card.hot {
+    border-left-color: var(--heat-hot-1);
+}
+
+.grid-card.very-hot {
+    border-left-color: var(--heat-hot-2);
+}
+
+.grid-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+}
+
+.card-content {
+    padding: 15px;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.card-pair {
+    font-weight: 600;
+}
+
+.card-network {
+    color: var(--text-secondary);
+    font-size: 12px;
+}
+
+.card-spread {
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 4px;
+    background-color: transparent;
+}
+
+/* Цвета спреда как в списке */
+.grid-card.cold .card-spread { color: var(--heat-cold-1); }
+.grid-card.cool .card-spread { color: var(--heat-cold-2); }
+.grid-card.warm .card-spread { color: var(--heat-warm-1); }
+.grid-card.warmer .card-spread { color: var(--heat-warm-2); }
+.grid-card.hot .card-spread { color: var(--heat-hot-1); }
+.grid-card.very-hot .card-spread { color: var(--heat-hot-2); }
+
+.card-exchanges {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.card-buy, .card-sell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.exchange-label {
+    color: var(--text-secondary);
+    font-size: 12px;
+    margin-bottom: 4px;
+}
+
+.exchange-name {
+    font-weight: 500;
+    margin-bottom: 2px;
+}
+
+.card-buy .exchange-price {
+    color: var(--accent-green);
+}
+
+.card-sell .exchange-price {
+    color: var(--accent-red);
+}
+
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    color: var(--text-secondary);
+    font-size: 12px;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* List View */
+#listView {
+    display: none;
+    flex-direction: column;
+}
+
+#listView.active {
+    display: flex;
+}
+
+.table-scroll-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.list-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.list-table th {
+    text-align: left;
+    padding: 12px 15px;
+    background-color: var(--bg-secondary);
+    color: var(--text-secondary);
+    font-weight: 500;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.list-table tbody tr {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.list-table tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.03);
+}
+
+.list-table td {
+    padding: 12px 15px;
+}
+
+.list-spread {
+    font-weight: 600;
+}
+
+.list-spread.cold {
+    color: var(--heat-cold-1);
+}
+
+.list-spread.cool {
+    color: var(--heat-cold-2);
+}
+
+.list-spread.warm {
+    color: var(--heat-warm-1);
+}
+
+.list-spread.warmer {
+    color: var(--heat-warm-2);
+}
+
+.list-spread.hot {
+    color: var(--heat-hot-1);
+}
+
+.list-spread.very-hot {
+    color: var(--heat-hot-2);
+}
+
+.list-network {
+    color: var(--text-secondary);
+    font-size: 12px;
+}
+
+.list-volume {
+    font-weight: 500;
+}
+
+.list-updated, .card-updated, .tile-updated {
+    color: var(--text-secondary);
+    font-size: 12px;
+}
+
+/* Панель деталей */
+.details-panel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 320px;
+    background-color: var(--bg-secondary);
+    border-left: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 20px;
+    transform: translateX(100%);
+    transition: var(--transition-slow);
+    z-index: 10;
+}
+
+.details-panel.active {
+    transform: translateX(0);
+}
+
+.close-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background-color: var(--bg-tertiary);
+    border: none;
+    border-radius: 50%;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.close-btn:hover {
+    background-color: var(--accent-red);
+}
+
+.pair-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin: 20px 0;
+}
+
+.pair-title h3 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.pair-network {
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+.spread-badge {
+    padding: 6px 12px;
+    border-radius: var(--border-radius);
+    font-weight: 700;
+}
+
+.spread-badge.cold {
+    background-color: rgba(8, 76, 140, 0.2);
+    color: #4fc3f7;
+}
+
+.spread-badge.hot {
+    background-color: rgba(229, 57, 53, 0.2);
+    color: #ff8a80;
+}
+
+.exchange-route {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding: 15px;
+    background-color: var(--bg-tertiary);
+    border-radius: var(--border-radius);
+}
+
+.exchange {
+    text-align: center;
+}
+
+.exchange-name {
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.exchange.buy .exchange-price {
+    color: var(--accent-green);
+    font-weight: 500;
+}
+
+.exchange.sell .exchange-price {
+    color: var(--accent-red);
+    font-weight: 500;
+}
+
+.route-arrow {
+    color: var(--text-secondary);
+}
+
+.details-metrics {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.metric {
+    display: flex;
+    flex-direction: column;
+}
+
+.metric-label {
+    color: var(--text-secondary);
+    font-size: 12px;
+    margin-bottom: 4px;
+}
+
+.metric-value {
+    font-weight: 500;
+}
+
+.metric-value.highlight {
+    color: var(--accent-green);
+    font-weight: 600;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.action-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px;
+    border: none;
+    border-radius: var(--border-radius);
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.buy-btn {
+    background-color: rgba(38, 166, 154, 0.1);
+    color: var(--accent-green);
+}
+
+.buy-btn:hover {
+    background-color: var(--accent-green);
+    color: white;
+}
+
+.sell-btn {
+    background-color: rgba(239, 83, 80, 0.1);
+    color: var(--accent-red);
+}
+
+.sell-btn:hover {
+    background-color: var(--accent-red);
+    color: white;
+}
+
+.pin-controls {
+    display: flex;
+    justify-content: center;
+}
+
+.pin-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 20px;
+    background-color: var(--bg-tertiary);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: var(--border-radius);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.pin-btn:hover {
+    background-color: rgba(41, 98, 255, 0.15);
+    color: var(--accent-blue);
+}
+
+.pin-btn.active {
+    background-color: rgba(41, 98, 255, 0.15);
+    border-color: var(--accent-blue);
+    color: var(--accent-blue);
+}
+
+/* Стили для мобильной панели фильтров */
+.filter-toggle-btn {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: var(--accent-blue);
+    color: white;
+    border: none;
+    box-shadow: var(--shadow-md);
+    z-index: 100;
+    cursor: pointer;
+    justify-content: center;
+    align-items: center;
+}
+
+.filter-toggle-btn .material-icons-round {
+    font-size: 24px;
+}
+
+.filter-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 99;
+}
+
+.filter-overlay.active {
+    display: block;
+}
+
+/* Стили для уведомлений */
+.toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 12px 20px;
+    background-color: var(--bg-tertiary);
+    border-left: 4px solid var(--accent-blue);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-md);
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: all 0.3s ease;
+    z-index: 9999;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Стили для закрепленных элементов */
+.pair-item.pinned, .grid-card.pinned, .heatmap-tile.pinned {
+    border-color: var(--accent-blue);
+    box-shadow: 0 0 10px rgba(0, 168, 255, 0.2);
+}
+
+tr.pinned {
+    background-color: rgba(0, 168, 255, 0.05);
+}
+
+tr.pinned td:first-child {
+    border-left: 3px solid var(--accent-blue);
+}
+
+/* Адаптивный дизайн */
+@media (max-width: 1200px) {
+    .filter-panel {
+        width: 240px;
+    }
+    
+    .details-panel {
+        width: 300px;
+    }
+    
+    .stats {
+        gap: 15px;
+    }
+    
+    .main-content.details-open {
+        padding-right: 300px;
+    }
+}
+
+@media (max-width: 992px) {
+    .main-content {
+        position: relative;
+    }
+    
+    .filter-panel {
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 280px;
+        z-index: 100;
+        transform: translateX(-100%);
+        box-shadow: var(--shadow-lg);
+    }
+    
+    .filter-panel.active {
+        transform: translateX(0);
+    }
+    
+    .filter-toggle-btn {
+        display: flex;
+    }
+    
+    #listView .list-table th, 
+    #listView .list-table td {
+        padding: 8px;
+        font-size: 13px;
+    }
+    
+    #listView .list-table {
+        min-width: 800px;
+    }
+    
+    .main-content.details-open {
+        padding-right: 0;
+    }
+    
+    .details-panel {
+        width: 100%;
+        max-width: 400px;
+    }
+}
+
+@media (max-width: 768px) {
+    .app-header {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    
+    .logo {
+        flex: 1;
+        order: 1;
+    }
+    
+    .view-controls {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+        margin-top: 8px;
+    }
+    
+    .user-info {
+        order: 2;
+        flex: 1;
+        justify-content: flex-end;
+    }
+    
+    .heatmap-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .stats {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        width: 100%;
+    }
+    
+    .view-btn {
+        flex: 1;
+        justify-content: center;
+    }
+    
+    .view-btn span:last-child {
+        display: none;
+    }
+    
+    .grid-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    .details-panel {
+        width: 100%;
+        max-width: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .stats {
+        grid-template-columns: 1fr;
+    }
+    
+    .color-legend {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .coin-tag {
+        padding: 4px 8px;
+        font-size: 12px;
+    }
+    
+    #listView .list-table th:nth-child(n+4),
+    #listView .list-table td:nth-child(n+4) {
+        display: none;
+    }
+    
+    #listView .list-table {
+        min-width: unset;
+    }
+}
+
+/* Стиль для отключенной кнопки просмотра */
+.view-btn.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* Исправление для ссылок в режиме list */
+#listView .list-table td a {
+    color: var(--accent-blue);
+    text-decoration: none;
+}
+
+#listView .list-table td a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .app-header {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    
+    .logo {
+        flex: 1;
+        order: 1;
+    }
+    
+    .view-controls {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+        margin-top: 8px;
+    }
+    
+    .user-info {
+        order: 2;
+        flex: 1;
+        justify-content: flex-end;
+    }
+    
+    /* Изменяем отображение статистики и легенды */
+    .heatmap-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    /* Статистика в одну строку */
+    .stats {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        gap: 15px;
+        width: 100%;
+        overflow-x: auto;
+        padding-bottom: 5px; /* Добавляем отступ для удобства прокрутки */
+    }
+    
+    /* Легенда на новой строке */
+    .color-legend {
+        width: 100%;
+        margin-top: 5px;
+    }
+    
+    .view-btn {
+        flex: 1;
+        justify-content: center;
+    }
+    
+    .view-btn span:last-child {
+        display: none;
+    }
+    
+    .grid-cards {
+        grid-template-columns: 1fr;
+    }
+    
+    .details-panel {
+        width: 100%;
+        max-width: none;
+    }
+}
+
+/* В максимально узком разрешении можно добавить прокрутку для статистики */
+@media (max-width: 480px) {
+    .stats {
+        /* Оставляем в ряд, но добавляем прокрутку если не помещается */
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .stat-item {
+        min-width: 80px; /* Минимальная ширина для элемента статистики */
+    }
+    
+    .color-legend {
+        flex-direction: row; /* Сохраняем в ряд */
+        align-items: center;
+        flex-wrap: wrap; /* но разрешаем перенос */
+    }
+    
+    .coin-tag {
+        padding: 4px 8px;
+        font-size: 12px;
+    }
+    
+    #listView .list-table th:nth-child(n+4),
+    #listView .list-table td:nth-child(n+4) {
+        display: none;
+    }
+    
+    #listView .list-table {
+        min-width: unset;
+    }
+}
+
+.exchange-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.exchange-tag {
+    padding: 6px 12px;
+    background-color: var(--bg-tertiary);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.exchange-tag.active {
+    background-color: rgba(41, 98, 255, 0.15);
+    border-color: var(--accent-blue);
+    color: var(--accent-blue);
+}
+
+.all-exchanges-btn {
+    background-color: var(--bg-secondary);
+    font-weight: 600;
+    border-color: var(--accent-blue);
+}
+
+.all-exchanges-btn.active {
+    background-color: rgba(41, 98, 255, 0.3);
+}
