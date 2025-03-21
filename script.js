@@ -46,7 +46,7 @@ function initCustomCursor() {
         gsap.to(cursor, {
             x: e.clientX,
             y: e.clientY,
-            duration: 0.1
+            duration: 0
         });
         
         gsap.to(cursorFollower, {
@@ -81,7 +81,7 @@ function initCustomCursor() {
                     padding: '10px 15px',
                     borderRadius: '4px',
                     fontSize: '12px',
-                    duration: 0.3
+                    duration: 0
                 });
             }
         });
@@ -94,7 +94,7 @@ function initCustomCursor() {
                 height: '12px',
                 padding: 0,
                 borderRadius: '50%',
-                duration: 0.3
+                duration: 0
             });
             
             gsap.to(cursorFollower, {
